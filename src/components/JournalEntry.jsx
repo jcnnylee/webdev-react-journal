@@ -1,6 +1,8 @@
-import { useState } from "react";
-import EditEntry from "./EditEntry";
-import { Link } from "react-router-dom";
+import { useState } from "react"
+import EditEntry from "./EditEntry"
+import { Link } from "react-router-dom"
+
+import {Button, Typography} from "@mui/material"
 
 function JournalEntry({ entry, updateEntry, deleteEntry }) {
   const [editing, setEditing] = useState(false);
@@ -15,11 +17,10 @@ function JournalEntry({ entry, updateEntry, deleteEntry }) {
         />
       ) : (
         <>
-          <h3>{entry.title}</h3>
-          <button onClick={() => setEditing(true)}>Edit</button>
-          <button onClick={() => deleteEntry(entry.id)}>Delete</button>
+          <Typography variant="h3">{entry.title}</Typography>
+          <Button onClick={() => deleteEntry(entry.id)}>Delete</Button>
           <Link to={`/entries/${entry.id}`} state={{ entry }}>
-            <button>View</button>
+            <Button>View</Button>
           </Link>
         </>
       )}
@@ -27,4 +28,4 @@ function JournalEntry({ entry, updateEntry, deleteEntry }) {
   );
 }
 
-export default JournalEntry;
+export default JournalEntry
