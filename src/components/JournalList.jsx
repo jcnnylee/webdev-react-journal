@@ -1,4 +1,3 @@
-import JournalEntry from "./JournalEntry"
 import { Link } from "react-router-dom"
 import {Button, Stack, Typography, Card, CardContent, CardActions,} from '@mui/material'
 /**
