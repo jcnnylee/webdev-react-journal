@@ -45,26 +45,44 @@ function JournalDetailPage() {
   }
 
   return (
-    <div>
-      {editing ? (
-        <EditEntry
-          entry={entry}
-          updateEntry={updateEntry}
-          onClose={() => setEditing(false)}
-        />
-      ) : (
-        <>
-          <Typography variant="h2">{entry.title}</Typography>
-          <Typography>{entry.content}</Typography>
+    <Stack alignItems="center" marginTop={6}>
+      <Box
+        sx={{
+          width: "600px",
+          border: "1px solid gray",
+          borderRadius: 2,
+          padding: 3,
+        }}
+      >
+        {editing ? (
+          <EditEntry
+            entry={entry}
+            updateEntry={updateEntry}
+            onClose={() => setEditing(false)}
+          />
+        ) : (
+          <>
+            <Typography variant="h4" gutterBottom>
+              {entry.title}
+            </Typography>
 
-          <Button onClick={() => setEditing(true)}>Edit</Button>
+            <Typography sx={{ whiteSpace: "pre-wrap", marginBottom: 2 }}>
+              {entry.content}
+            </Typography>
 
-          <Link to="/">
-            <Button>Back</Button>
-          </Link>
-        </>
-      )}
-    </div>
+            <Stack direction="row" spacing={2}>
+              <Button variant="contained" onClick={() => setEditing(true)}>
+                Edit
+              </Button>
+
+              <Button component={Link} to="/" variant="outlined">
+                Back
+              </Button>
+            </Stack>
+          </>
+        )}
+      </Box>
+    </Stack>
   )
 }
 
