@@ -1,21 +1,73 @@
-import { useState } from "react"
+import { useState , useEffect } from "react"
 import JournalForm from "../components/JournalForm"
 import JournalList from "../components/JournalList"
+import axios from 'axios'
+import { API_URL } from '../constants'
 
 import { Typography , Stack , Box , Divider } from "@mui/material"
 
 function JournalPage() {
+
   const [entries, setEntries] = useState([]);
 
-  const addEntry = (title, content) => {
-  const newEntry = {
-    id: Date.now(),
-    title,
-    content,
+  // Fetches the entries from the API
+  async function getEntries() {
+    try {
+      const response = await axios.get(`${API_URL}/entries`)
+      const { data } = response
+      setEntries(data)
+
+    } catch (error) {
+      console.error("Something went wrong", error)
+      setEntries([])
+    }
   }
 
-  setEntries([...entries, newEntry])
+  useEffect(() => {
+    getEntries() //ignore
+  }, [])
+
+  // Adds an entry to the JournalList
+  async function addEntry(title, content) {
+    try {
+      await axios.post(`${API_URL}/entries`, { title, content })
+      getEntries()
+    } catch (error) {
+      console.error(error)
+    }
   }
+
+  // Deletes an entry from the JournalList
+  async function deleteEntry(id) {
+    try {
+      await axios.delete(`${API_URL}/entries/${id}`)
+      getEntries()
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  // Updates an entry in the JournalList
+  async function updateEntry(id, title, content) {
+  try {
+    await axios.put(`${API_URL}/entries/${id}`, { title, content })
+    getEntries()
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+
+
+  // const addEntry = (title, content) => {
+  // const newEntry = {
+  //   id: Date.now(),
+  //   title,
+  //   content,
+  // }
+
+  // setEntries([...entries, newEntry])
+  // }
 
   /*  const updateEntry = (id, updatedTitle, updatedContent) => {
   setEntries(
@@ -26,9 +78,9 @@ function JournalPage() {
   } */
 
   /*This function deletes an entry from the JournalList */
-  const deleteEntry = (id) => {
-    setEntries(entries.filter((entry) => entry.id !== id))
-  };
+  // const deleteEntry = (id) => {
+  //   setEntries(entries.filter((entry) => entry.id !== id))
+  // };
 
   return (
     /*Stack container that wraps the heading, JournalList and JournalForm together*/
@@ -44,7 +96,7 @@ function JournalPage() {
           <Box flex = {1}>
             <JournalList
             entries={entries}
-            //updateEntry={updateEntry}
+            updateEntry={updateEntry}
             deleteEntry={deleteEntry}
             />
           </Box>

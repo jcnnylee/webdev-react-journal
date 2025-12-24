@@ -7,7 +7,7 @@ function EditEntry({ entry, updateEntry, onClose }) {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    updateEntry(entry.id, title, content)
+    updateEntry(title, content)
     onClose()
   };
 

@@ -1,15 +1,48 @@
-import { useState } from "react"
-import { useLocation } from "react-router-dom"
-import { Button, Typography } from "@mui/material"
+import axios from "axios"
+import { useEffect, useState } from "react"
+import { useParams, Link } from "react-router-dom"
+import { API_URL } from "../constants"
 import EditEntry from "../components/EditEntry"
+import { Typography, Button, Stack, Box } from "@mui/material"
 
 function JournalDetailPage() {
-  const { state } = useLocation()
-  const { entry, updateEntry } = state
+  const { id } = useParams()
 
+  useEffect(() => {
+    getEntry() //ignore the error
+  }, [])
+
+  const [entry, setEntry] = useState(null)
   const [editing, setEditing] = useState(false)
 
-  if (!entry) return <p>There are no entries selected.</p>
+  // Fetches the entry from the API
+  async function getEntry() {
+    try {
+      const response = await axios.get(`${API_URL}/entries/${id}`)
+      setEntry(response.data)
+    } catch (error) {
+      console.error(error)
+      setEntry(null)
+    }
+  }
+
+  // UPDATES the entry
+  async function updateEntry(updatedTitle, updatedContent) {
+    try {
+      await axios.put(`${API_URL}/entries/${id}`, {
+        title: updatedTitle,
+        content: updatedContent,
+      })
+      setEditing(false)
+      getEntry()
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  if (!entry) {
+    return <Typography>Entry is still loading...</Typography>
+  }
 
   return (
     <div>
@@ -25,6 +58,10 @@ function JournalDetailPage() {
           <Typography>{entry.content}</Typography>
 
           <Button onClick={() => setEditing(true)}>Edit</Button>
+
+          <Link to="/">
+            <Button>Back</Button>
+          </Link>
         </>
       )}
     </div>
