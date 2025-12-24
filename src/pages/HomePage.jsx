@@ -1,19 +1,25 @@
-import { Link } from 'react-router-dom'
-import { Typography, Button, Box } from '@mui/material'
+import { Link } from "react-router-dom"
+import LoginForm from "../components/LoginForm"
+import { Typography, Button, Box, Stack } from "@mui/material"
 
 function HomePage() {
   return (
-    <Box sx={{ textAlign: 'center', mt: 10 }}>
-      <Typography variant="h2" gutterBottom>
-        Welcome to Your Journal
-      </Typography>
-      <Typography variant="h5" gutterBottom>
-        Keep track of your thoughts and memories.
-      </Typography>
-      <Button variant="contained" component={Link} to="/entries">
-        View Journal Entries
-      </Button>
-    </Box>
+    <Stack>
+        <Box sx={{ textAlign: 'center', mt: 10 }}>
+        <Typography variant="h2" gutterBottom>
+            Welcome to Journaly
+        </Typography>
+        <Typography variant="h5" gutterBottom>
+            Track your thoughts and feelings
+        </Typography>
+        <Button variant="contained" component={Link} to="/entries">
+            View Journal Entries
+        </Button>
+
+        <LoginForm />
+
+        </Box>
+    </Stack>
   )
 }
 
