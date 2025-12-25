@@ -1,7 +1,8 @@
 import {Formik, Form, Field} from "formik"
 import * as Yup from "yup"
-import axios from "axios"
+//import axios from "axios"
 import {Button, TextField, Box, Stack,} from "@mui/material"
+import api from "../axiosConfig"
 
 function RegisterForm() {
 
@@ -24,7 +25,7 @@ function RegisterForm() {
             onSubmit={async (values, {resetForm}) => {
                 try {
                 //console.log("Form values", values)
-                    await axios.post("http://localhost:4000/register", values)
+                    await api.post("/register", values)
                     resetForm()
 
                 } catch(error) {

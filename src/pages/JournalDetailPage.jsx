@@ -1,9 +1,10 @@
-import axios from "axios"
+//import axios from "axios"
 import { useEffect, useState } from "react"
 import { useParams, Link } from "react-router-dom"
 import { API_URL } from "../constants"
 import EditEntry from "../components/EditEntry"
 import { Typography, Button, Stack, Box } from "@mui/material"
+import api from "../axiosConfig"
 
 function JournalDetailPage() {
   const { id } = useParams()
@@ -18,7 +19,7 @@ function JournalDetailPage() {
   // Fetches the entry from the API
   async function getEntry() {
     try {
-      const response = await axios.get(`${API_URL}/entries/${id}`)
+      const response = await api.get(`${API_URL}/entries/${id}`)
       setEntry(response.data)
     } catch (error) {
       console.error(error)
@@ -29,7 +30,7 @@ function JournalDetailPage() {
   // UPDATES the entry
   async function updateEntry(updatedTitle, updatedContent) {
     try {
-      await axios.put(`${API_URL}/entries/${id}`, {
+      await api.put(`/entries/${id}`, {
         title: updatedTitle,
         content: updatedContent,
       })
@@ -75,7 +76,7 @@ function JournalDetailPage() {
                 Edit
               </Button>
 
-              <Button component={Link} to="/" variant="outlined">
+              <Button component={Link} to="/entries" variant="outlined">
                 Back
               </Button>
             </Stack>

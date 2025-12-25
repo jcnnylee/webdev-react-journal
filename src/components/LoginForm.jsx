@@ -1,8 +1,9 @@
 import {Formik, Field, Form,} from "formik"
 import * as Yup from "yup"
-import axios from "axios"
+//import axios from "axios"
 import { Navigate, useNavigate } from "react-router-dom"
 import {TextField, Box,Button, Stack} from "@mui/material"
+import api from "../axiosConfig"
 
 
 
@@ -20,9 +21,9 @@ function LoginForm() {
                 password: "",
             }}
             validationSchema={schema}
-            onSubmit={(values) => {
+            onSubmit={async (values) => {
                 try {
-                    const res = axios.post("http://localhost:4000/login", values)
+                    const res = await api.post("/login", values)
 
                     const token = res.data.token
                     if (token) {

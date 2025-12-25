@@ -1,10 +1,12 @@
 import { useState , useEffect } from "react"
 import JournalForm from "../components/JournalForm"
 import JournalList from "../components/JournalList"
+import LogoutButton from "../components/LogoutButton"
 import axios from 'axios'
 import { API_URL } from '../constants'
 
 import { Typography , Stack , Box , Divider } from "@mui/material"
+import api from "../axiosConfig"
 
 function JournalPage() {
 
@@ -13,7 +15,7 @@ function JournalPage() {
   // Fetches the entries from the API
   async function getEntries() {
     try {
-      const response = await axios.get(`${API_URL}/entries`)
+      const response = await api.get(`${API_URL}/entries`)
       const { data } = response
       setEntries(data)
 
@@ -30,8 +32,9 @@ function JournalPage() {
   // Adds an entry to the JournalList
   async function addEntry(title, content) {
     try {
-      await axios.post(`${API_URL}/entries`, { title, content })
+      await api.post(`/entries`, { title, content })
       getEntries()
+
     } catch (error) {
       console.error(error)
     }
@@ -40,7 +43,7 @@ function JournalPage() {
   // Deletes an entry from the JournalList
   async function deleteEntry(id) {
     try {
-      await axios.delete(`${API_URL}/entries/${id}`)
+      await api.delete(`${API_URL}/entries/${id}`)
       getEntries()
     } catch (error) {
       console.error(error)
@@ -50,7 +53,7 @@ function JournalPage() {
   // Updates an entry in the JournalList
   async function updateEntry(id, title, content) {
   try {
-    await axios.put(`${API_URL}/entries/${id}`, { title, content })
+    await api.put(`${API_URL}/entries/${id}`, { title, content })
     getEntries()
   } catch (error) {
     console.error(error)
@@ -85,9 +88,11 @@ function JournalPage() {
   return (
     /*Stack container that wraps the heading, JournalList and JournalForm together*/
     <Stack direction = 'column' spacing = {8} alignItems = 'center'>
+      
       <Typography variant="h3">Journal</Typography>
-
+      
       <Stack spacing = {4}>
+        <LogoutButton />
 
         <Typography variant = "h5">Journal Entries</Typography>
     
