@@ -1,14 +1,24 @@
 import { useState , useEffect } from "react"
+import { useNavigate } from 'react-router-dom'
 import JournalForm from "../components/JournalForm"
 import JournalList from "../components/JournalList"
 import LogoutButton from "../components/LogoutButton"
-import axios from 'axios'
+//import axios from 'axios'
 import { API_URL } from '../constants'
 
 import { Typography , Stack , Box , Divider } from "@mui/material"
 import api from "../axiosConfig"
+import NavBar from "../components/NavBar"
 
 function JournalPage() {
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    const token = localStorage.getItem('token')
+    if (!token) {
+      navigate('/')
+    }
+  }, [navigate])
 
   const [entries, setEntries] = useState([]);
 
@@ -86,6 +96,8 @@ function JournalPage() {
   // };
 
   return (
+    <>
+      <NavBar />
     /*Stack container that wraps the heading, JournalList and JournalForm together*/
     <Stack direction = 'column' spacing = {8} alignItems = 'center'>
       
@@ -123,6 +135,7 @@ function JournalPage() {
         </Stack>
       </Stack>
     </Stack>
+    </>
   )
 }
 

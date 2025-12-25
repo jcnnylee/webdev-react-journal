@@ -5,6 +5,7 @@ import { API_URL } from "../constants"
 import EditEntry from "../components/EditEntry"
 import { Typography, Button, Stack, Box } from "@mui/material"
 import api from "../axiosConfig"
+import NavBar from "../components/NavBar"
 
 function JournalDetailPage() {
   const { id } = useParams()
@@ -46,6 +47,8 @@ function JournalDetailPage() {
   }
 
   return (
+    <>
+      <NavBar />
     <Stack alignItems="center" marginTop={6}>
       <Box
         sx={{
@@ -84,6 +87,7 @@ function JournalDetailPage() {
         )}
       </Box>
     </Stack>
+    </>
   )
 }
 
