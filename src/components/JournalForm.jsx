@@ -43,7 +43,7 @@ function JournalForm({ addEntry }) {
           <Stack spacing = {4}>
               <TextField
                   type='text'
-                  placeholder='Title'
+                  placeholder='Journal Title'
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
               />
@@ -55,7 +55,7 @@ function JournalForm({ addEntry }) {
               
               {/* React Kawaii Mood Icons when creating an entry, you will be able to select a mood*/}
               <Box>
-                <Typography variant='subtitle2' gutterBottom>How are you feeling?</Typography>
+                <Typography variant='subtitle2' gutterBottom>Mood:</Typography>
                 <Stack direction='row' spacing={2} justifyContent='center'>
                   {moods.map((m) => (
                     <Box
