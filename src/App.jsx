@@ -9,11 +9,11 @@ function App() {
     
     <Router>
       <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path ="/register" element={<RegisterPage/>} />
+        <Route path='/' element={<HomePage />} />
+        <Route path ='/register' element={<RegisterPage/>} />
 
-        <Route path="/entries" element={<JournalPage />} />
-        <Route path="/entries/:id" element={<JournalDetailPage />} />
+        <Route path='/entries' element={<JournalPage />} />
+        <Route path='/entries/:id' element={<JournalDetailPage />} />
       </Routes>
     </Router>
 

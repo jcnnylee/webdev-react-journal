@@ -1,14 +1,13 @@
-import { useState , useEffect } from "react"
+import { useState , useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import JournalForm from "../components/JournalForm"
-import JournalList from "../components/JournalList"
-import LogoutButton from "../components/LogoutButton"
+import JournalForm from '../components/JournalForm'
+import JournalList from '../components/JournalList'
 //import axios from 'axios'
 import { API_URL } from '../constants'
 
-import { Typography , Stack , Box , Divider } from "@mui/material"
-import api from "../axiosConfig"
-import NavBar from "../components/NavBar"
+import { Typography , Stack , Box , Divider } from '@mui/material'
+import api from '../axiosConfig'
+import NavBar from '../components/NavBar'
 
 function JournalPage() {
   const navigate = useNavigate()
@@ -27,10 +26,10 @@ function JournalPage() {
     try {
       const response = await api.get(`${API_URL}/entries`)
       const { data } = response
-      setEntries(data)
+      setEntries(data.reverse()) // Displays the newest entries first
 
     } catch (error) {
-      console.error("Something went wrong", error)
+      console.error('Something went wrong', error)
       setEntries([])
     }
   }
@@ -40,9 +39,9 @@ function JournalPage() {
   }, [])
 
   // Adds an entry to the JournalList
-  async function addEntry(title, content) {
+  async function addEntry(title, content, mood) {
     try {
-      await api.post(`/entries`, { title, content })
+      await api.post(`/entries`, { title, content, mood })
       getEntries()
 
     } catch (error) {
@@ -63,7 +62,10 @@ function JournalPage() {
   // Updates an entry in the JournalList
   async function updateEntry(id, title, content) {
   try {
-    await api.put(`${API_URL}/entries/${id}`, { title, content })
+    await api.put(`${API_URL}/entries/${id}`, 
+      { title, 
+        content 
+      })
     getEntries()
   } catch (error) {
     console.error(error)
@@ -98,17 +100,21 @@ function JournalPage() {
   return (
     <>
       <NavBar />
-    /*Stack container that wraps the heading, JournalList and JournalForm together*/
-    <Stack direction = 'column' spacing = {8} alignItems = 'center'>
-      
-      <Typography variant="h3">Journal</Typography>
+    {/*Stack container that wraps the heading, JournalList and JournalForm together*/}
+    <Stack 
+      direction = 'column' 
+      spacing = {8} 
+      alignItems = 'center' 
+      sx={{ mt: 10 }}>
       
       <Stack spacing = {4}>
-        <LogoutButton />
-
-        <Typography variant = "h5">Journal Entries</Typography>
+        <Typography variant = 'h5' color='white'>Journal Entries</Typography>
     
-        <Stack direction = {{ xs: 'column', sm: 'row' }} alignItems = 'flex-start' justifyContent= 'center' spacing = {10}>
+        <Stack 
+          direction = {{ xs: 'column', sm: 'row' }} 
+          alignItems = 'flex-start' 
+          justifyContent= 'center' 
+          spacing = {10}>
 
           <Box flex = {1}>
             <JournalList
@@ -118,13 +124,11 @@ function JournalPage() {
             />
           </Box>
 
-          <Divider orientation = 'vertical' flexItem />
+          <Divider orientation = 'vertical' flexItem sx={{ bgcolor: 'white' }}/>
 
           <Box
             sx={{
-            border: '1px solid gray',
-            padding: 2,
-            borderRadius: 2,
+        
             minWidth: { xs: '100%', sm: 600 },
             
             }}
